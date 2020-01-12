@@ -1,0 +1,106 @@
+---
+title: 'Statistics : Homework No. 07'
+author: "Levon Khachatryan"
+date: 'Due time/date: 21:20, 4 December, 2018'
+output: html_document
+---
+R version is following:
+```{r}
+R.version.string
+```
+I converted xlsx to csv, due to the import of the xlsx file I had some problems with read.xlsx package, but i think it doesn't matter.
+```{r echo=FALSE}
+```
+## Problem 4.
+At first let's import necessary file:
+```{r}
+rm(list = ls())
+setwd("D:/MyProjects/StatisticHomeworks/Homework7")
+dat <- read.csv("Hw07p04.csv", stringsAsFactors = FALSE,header = FALSE)
+head(dat)
+```
+**$\hat{p}$** has the following form:<br /><br />
+$\hat{p} = \frac{X_{1}+X_{2}+...+X_{10}}{10}$<br /><br />
+For future calculations, I will add a new column **p** to our data set, where the appropriate value for $\hat{p}$ will be stored.
+```{r}
+dat["p"] <- rowSums( dat[,2:11] )/10
+head(dat)
+```
+1) Construct the distribution (histogram and KDE) of $\hat{p}$
+```{r}
+set.seed(1)
+p.hat <- dat[,"p"]
+hist(p.hat, freq = FALSE)
+dens <- density(p.hat)
+lines(dens)
+```
+```{r echo=FALSE}
+```
+2) calculate the mean of all estimates $\hat{p}$
+```{r}
+mean(p.hat)
+```
+3) What do you think, was the coin fair ?<br /><br />
+I think that 150 experiments are not enough to say something about the fairness of the coin , but if I supposed to say something, I will say that it is not a fair coin, because the mean is not equal to 5.
+```{r echo=FALSE}
+```
+## Problem 5 - d
+So my estimator is the following:<br /><br />
+$\hat{\lambda}_{n}=\frac{X_{1}+X_{2}+...+X_{n}}{n+1}$
+```{r}
+rm(list = ls())
+setwd("D:/MyProjects/StatisticHomeworks/Homework7")
+dat1 <- read.csv("Hw07p05.csv", stringsAsFactors = FALSE,header = FALSE)
+head(dat1)
+```
+My task is to construct the histogram and KDE for the estimator $\hat{\lambda}_{10}$.
+```{r}
+dat1["l"] <- rowSums(dat1[,1:10])/11
+head(dat1)
+```
+I will do the same as in the 4th example.
+```{r}
+set.seed(1)
+l.hat <- dat1[,"l"]
+hist(l.hat, freq = FALSE)
+dens <- density(l.hat)
+lines(dens)
+```
+```{r echo=FALSE}
+```
+## Problem 6 - b
+```{r}
+NumberOfTrials <- 200
+ListOfMax <- list()
+ListOfMin <- list()
+for (i in 1:NumberOfTrials){
+  SeqFromUnif <- runif(n = 100, min = -1, max = 1)
+  ListOfMax[[i]] <- max(SeqFromUnif)
+  ListOfMin[[i]] <- min(SeqFromUnif)
+  TheoriticalPDF <- dunif(SeqFromUnif)
+}
+ListOfMax <- as.numeric(ListOfMax)
+ListOfMin <- as.numeric(ListOfMin)
+```
+For $X_{(n)}$ it will be the following:
+```{r}
+set.seed(1)
+hist(ListOfMax, freq = FALSE)
+dens <- density(ListOfMax)
+lines(dens)
+```
+```{r echo=FALSE}
+```
+And for $X_{(1)}$:
+```{r}
+set.seed(1)
+hist(ListOfMin, freq = FALSE)
+dens <- density(ListOfMin)
+lines(dens)
+```
+```{r echo=FALSE}
+```
+The theoretical PDF obtained from the above calculations is follows:
+```{r}
+plot(TheoriticalPDF)
+```
