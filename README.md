@@ -1,4 +1,4 @@
-## The list of topics for ***MULTIVARIATE STATISTICS*** coiurse
+## The list of topics for ***MULTIVARIATE STATISTICS*** course
 
 	1. Aspects of multivariate analysis: a problem of selection of coordinate system.
 	
